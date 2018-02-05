@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end">
+
+        <TextView
+            android:id="@+id/textview_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview_day"
+            android:layout_centerHorizontal="true"
+            android:minHeight="8dp"
+            android:minWidth="8dp"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/indicator_unavailable"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/circle_unavailable"
+                android:visibility="invisible" />
+
+            <View
+                android:id="@+id/indicator_preferred"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/circle_preferred"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
