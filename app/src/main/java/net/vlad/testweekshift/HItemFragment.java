@@ -1,13 +1,16 @@
 package net.vlad.testweekshift;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import net.vlad.testweekshift.model.DayModel;
 
@@ -85,10 +88,27 @@ public class HItemFragment extends Fragment {
         //        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         //    }
             recyclerView.setAdapter(new HorizontalRecyclerViewAdapter(SetWeek(org.joda.time.DateTime.now()), mListener));
+            recyclerView.setHasFixedSize(true);
+            int w =calculateCellWidth(context, 7);
+            recyclerView.setMinimumWidth(w);
+		          
         //}s
         return view;
     }
-
+    public static int calculateCellWidth(Context context, int itemsOnScreen) {
+        WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+        if (windowManager != null) {
+            Display display = windowManager.getDefaultDisplay();
+            Point size = new Point();
+            
+            display.getSize(size);
+            int screenWidth = (int)(size.x - 72*context.getResources().getDisplayMetrics().density + 0.5f);
+            
+            return screenWidth / itemsOnScreen;
+        }
+        
+        return ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
 
     @Override
     public void onAttach(Context context) {

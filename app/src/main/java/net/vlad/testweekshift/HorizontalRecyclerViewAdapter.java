@@ -1,9 +1,13 @@
 package net.vlad.testweekshift;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,7 +43,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.hday.setText(mValues.get(position).getFdate().toString("E"));
-        holder.vday.setText(mValues.get(position).getFdate().toString("DD"));
+        holder.vday.setText(mValues.get(position).getFdate().toString("dd"));
         //holder.mView.set
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +61,22 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     public int getItemCount() {
         return mValues.size();
     }
-
+    
+    public static int calculateCellWidth(Context context, int itemsOnScreen) {
+        WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+        if (windowManager != null) {
+            Display display = windowManager.getDefaultDisplay();
+            Point size = new Point();
+            
+            display.getSize(size);
+            int screenWidth = (int)(size.x - 72*context.getResources().getDisplayMetrics().density + 0.5f);
+            
+            return screenWidth / itemsOnScreen;
+        }
+        
+        return ViewGroup.LayoutParams.WRAP_CONTENT;
+    }
+    
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView hday;
@@ -69,6 +88,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
             mView = view;
             LinearLayout llroot = mView.findViewById(R.id.llroot);
             llroot.setWeightSum(1.0f);
+            llroot.setMinimumWidth(calculateCellWidth(view.getContext(), 7));
             hday = (TextView) view.findViewById(R.id.sdv_day_letter);
             vday = (TextView) view.findViewById(R.id.sdv_day_number);
         }

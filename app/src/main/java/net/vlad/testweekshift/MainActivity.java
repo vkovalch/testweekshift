@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import net.vlad.testweekshift.dummy.DummyContentV;
 import net.vlad.testweekshift.model.DayModel;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BlankFragment.OnF
 
     @Override
     public void onListFragmentInteraction(DayModel item) {
+        Toast.makeText(getApplicationContext(), "Select date:"+item.getFdate().toString("dd/MM/yyyy"), Toast.LENGTH_SHORT).show();
 
     }
 }
